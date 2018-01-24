@@ -52,7 +52,6 @@ check_error $? "[ ERROR ] - Cannot copy file elasticsearch.repo"
 sudo yum -y update
 
 # ELK Stack Installation
-
 if [ -d "$path_elasticsearch" ]; then
     echo "Elasticsearch installed"
 else
