@@ -16,6 +16,8 @@ elk_services() {
 path_elasticsearch="/usr/share/elasticsearch"
 path_logstash="/usr/share/logstash"
 path_kibana="/usr/share/kibana"
+path_repo="/tmp/elk_stack/elk_repo"
+path_conf="/tmp/elk_stack/elk_conf"
 
 # Update system
 sudo yum -y update
@@ -39,11 +41,11 @@ sudo rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch
 check_error $? "[ ERROR ] - Cannot import GPG-Key"
 
 # Copy repo
-yes | sudo cp /tmp/elk_stack/elk_repo/kibana.repo /etc/yum.repos.d/ELK-Kibana.repo
+yes | sudo cp $path_repo/kibana.repo /etc/yum.repos.d/ELK-Kibana.repo
 check_error $? "[ ERROR ] - Cannot copy file kibana.repo"
-yes | sudo cp /tmp/elk_stack/elk_repo/logstash.repo /etc/yum.repos.d/ELK-Logstash.repo
+yes | sudo cp $path_repo/logstash.repo /etc/yum.repos.d/ELK-Logstash.repo
 check_error $? "[ ERROR ] - Cannot copy file logstash.repo"
-yes | sudo cp /tmp/elk_stack/elk_repo/elasticsearch.repo /etc/yum.repos.d/ELK-Elasticsearch.repo
+yes | sudo cp $path_repo/elasticsearch.repo /etc/yum.repos.d/ELK-Elasticsearch.repo
 check_error $? "[ ERROR ] - Cannot copy file elasticsearch.repo"
 
 # Update system after copy repo
@@ -75,7 +77,7 @@ else
     echo "Logstash installing ..."
     sudo yum -y install logstash
     check_error $? "[ ERROR ] - Unable to install rpm package logstash"
-    yes | sudo cp /tmp/elk_stack/elk_conf/10-syslog.conf /etc/logstash/conf.d/
+    yes | sudo cp $path_conf/10-syslog.conf /etc/logstash/conf.d/
     check_error $? "[ ERROR ] - Cannot copy file 10-syslog.conf"
 fi
 
