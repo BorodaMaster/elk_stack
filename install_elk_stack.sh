@@ -51,7 +51,7 @@ sudo yum -y update
 
 # ELK Stack Installation
 
-if [ ! -f $path_elasticsearch ]; then
+if [ -d "$path_elasticsearch" ]; then
     echo "Elasticsearch installed"
 else
     echo "Elasticsearch installing ..."
@@ -59,7 +59,7 @@ else
     check_error $? "[ ERROR ] - Unable to install rpm package elasticsearch"
 fi
 
-if [ ! -f $path_kibana ]; then
+if [ -d "$path_kibana" ]; then
     echo "Kibana installed"
 else
     echo "Kibana installing ..."
@@ -69,7 +69,7 @@ else
     check_error $? "[ ERROR ] - Cannot change config file kibana.yml"
 fi
 
-if [ ! -f $path_logstash ]; then
+if [ -d "$path_logstash" ]; then
     echo "Logstash installed"
 else
     echo "Logstash installing ..."
