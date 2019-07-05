@@ -1,0 +1,79 @@
+{
+  "trigger": {
+    "schedule": {
+      "interval": "2m"
+    }
+  },
+  "input": {
+    "search": {
+      "request": {
+        "search_type": "query_then_fetch",
+        "indices": [
+          "heartbeat-*"
+        ],
+        "types": [],
+        "body": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "must": [
+                {
+                  "term": {
+                    "monitor.status": {
+                      "value": "down"
+                    }
+                  }
+                }
+              ],
+              "filter": [
+                {
+                  "range": {
+                    "@timestamp": {
+                      "from": "now-1m"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "aggregations": {
+            "by_monitors": {
+              "terms": {
+                "field": "monitor.host",
+                "size": 100,
+                "min_doc_count": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "condition": {
+    "compare": {
+      "ctx.payload.hits.total": {
+        "gt": 0
+      }
+    }
+  },
+  "actions": {
+    "merck_webhook": {
+      "transform": {
+        "script": {
+          "source": "def docs = []; for(item in ctx.payload.aggregations.by_monitors.buckets) { def document = [ 'by_monitors' : item.key ]; docs.add(document); } return ['_doc' : docs];",
+          "lang": "painless"
+        }
+      },
+      "webhook": {
+        "scheme": "https",
+        "host": "api.ciscospark.com",
+        "port": 443,
+        "method": "post",
+        "path": "/v1/webhooks/incoming/__id__",
+        "params": {},
+        "headers": {},
+        "body": "{ \"text\" : \"Encountered errors on host(s) {{#ctx.payload._doc}} {{by_monitors}}; {{/ctx.payload._doc}} ELK cluster monitoring\"}"
+      }
+    }
+  }
+}

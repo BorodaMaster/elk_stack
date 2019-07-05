@@ -1,0 +1,27 @@
+- type: tcp
+  name: logstash
+  hosts: ["example.com:5044"]
+  schedule: '@every 15s'
+  ipv4: true
+
+- type: tcp
+  name: kibana
+  hosts: ["example.com:5601"]
+  schedule: '@every 15s'
+  ipv4: true
+
+- type: http
+  name: elasticsearch
+  method: "GET"
+  urls: ["http://example.com:9200"]
+  schedule: '@every 15s'
+  timeout: 5s
+
+- type: http
+  name: nginx
+  method: "GET"
+  urls: ["http://example.com:80"]
+  username: 'kibanaadmin'
+  password: 'password'
+  schedule: '@every 15s'
+  timeout: 5s
