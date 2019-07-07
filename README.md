@@ -44,13 +44,13 @@ apt install nginx
 echo "kibanaadmin:`openssl passwd -apr1`" | tee -a /etc/nginx/htpasswd.users
 ```
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/nginx/sites-available/example.com`
 
 [Open file example.com](./nginx/example.com)
 
-### Create symlink
+### - Create symlink
 
 ```bash
 ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/example.com
@@ -79,7 +79,7 @@ apt update
 apt install elasticsearch
 ```
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/elasticsearch/elasticsearch.yml`
 
@@ -115,7 +115,7 @@ curl -X GET "localhost:9200"
 apt install kibana
 ```
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/kibana/kibana.yml`
 
@@ -144,7 +144,7 @@ apt install logstash
 
 `INFO:` [Help Elastic.co](https://www.elastic.co/guide/en/logstash/6.7/logstash-config-for-filebeat-modules.html#parsing-system)
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/logstash/conf.d/02-beats-input.conf`
 
@@ -182,7 +182,7 @@ apt update
 apt install filebeat
 ```
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/filebeat/filebeat.yml`
 
@@ -222,7 +222,7 @@ systemctl enable filebeat
 apt install heartbeat-elastic
 ```
 
-### Change configuration file(s)
+### - Change configuration file(s)
 
 `vim /etc/heartbeat/heartbeat.yml`
 
