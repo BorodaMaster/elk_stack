@@ -72,7 +72,7 @@
         "path": "/v1/webhooks/incoming/__id__",
         "params": {},
         "headers": {},
-        "body": "{ \"text\" : \"Encountered errors on host(s) {{#ctx.payload._doc}} {{by_monitors}}; {{/ctx.payload._doc}} ELK cluster monitoring\"}"
+        "body": "{ \"text\" : \"Encountered errors on host(s) {{#ctx.payload._doc}} {{by_monitors}}\n {{/ctx.payload._doc}} ELK cluster monitoring\"}"
       }
     }
   }
